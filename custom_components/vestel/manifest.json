@@ -1,0 +1,9 @@
+    
+{
+  "domain": "vestel",
+  "name": "Vestel",
+  "documentation": "https://github.com/T3m3z/HA-Vestel-Component",
+  "dependencies": [],
+  "codeowners": ["@T3m3z"],
+  "requirements": ["websockets==6.0", "pyvesteltv==0.1.4"]
+}
