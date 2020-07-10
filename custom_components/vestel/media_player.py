@@ -64,8 +64,8 @@ class VestelDevice(MediaPlayerEntity):
     """Representation of a Vestel Smart TV."""
 
     def __init__(self, hass, name, host, sources_list, support_power):
-        from .pyvesteltv import Broadcast
-        from .pyvesteltv import VestelTV
+        from pyvesteltv import Broadcast
+        from pyvesteltv import VestelTV
         """Initialize the Procaster device."""
         self.hass = hass
         self._name = name
