@@ -17,7 +17,7 @@ from homeassistant.components.media_player.const import (
 from homeassistant.const import (
     STATE_IDLE, STATE_UNKNOWN, STATE_OFF, STATE_PAUSED, STATE_PLAYING, CONF_HOST, CONF_NAME,
     CONF_TIMEOUT, EVENT_HOMEASSISTANT_STOP)
-import homeassistant.helpers.config_validation as cv
+from homeassistant.helpers import config_validation as cv, entity_platform, service
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -27,6 +27,8 @@ CONF_TCP_PORT = 'tcp_port'
 CONF_WS_PORT = 'ws_port'
 CONF_SOURCES = 'sources'
 CONF_SUPPORT_POWER = 'supports_power'
+
+SERVICE_SEND_KEY = 'send_key'
 
 DEFAULT_SOURCES = ["TV", "Netflix", "YouTube"]
 
@@ -57,6 +59,17 @@ def async_setup_platform(hass, config, async_add_entities, discovery_info=None):
         host=host,
         sources_list=config.get(CONF_SOURCES),
         support_power=config.get(CONF_SUPPORT_POWER))
+
+    platform = entity_platform.current_platform.get()
+
+    # Register service for sending key presses
+    platform.async_register_entity_service(
+        SERVICE_SEND_KEY,
+        {
+            vol.Required('key'): cv.positive_int,
+        },
+        "async_send_key",
+    )
     
     async_add_entities([entity], update_before_add=True)
 
@@ -93,7 +106,7 @@ class VestelDevice(MediaPlayerEntity):
         _LOGGER.info("Configured Vestel Device: %s", self._name)
 
     @asyncio.coroutine
-    def async_sendKey(self, key):
+    def async_send_key(self, key):
         yield from self.device.sendkey(key)
 
     @property
