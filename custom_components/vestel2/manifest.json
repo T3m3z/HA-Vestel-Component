@@ -1,0 +1,10 @@
+    
+{
+  "domain": "vestel2",
+  "name": "Vestel2",
+  "documentation": "https://github.com/T3m3z/HA-Vestel-Component",
+  "dependencies": [],
+  "codeowners": ["@T3m3z"],
+  "requirements": [],
+  "version": 0.1
+}
